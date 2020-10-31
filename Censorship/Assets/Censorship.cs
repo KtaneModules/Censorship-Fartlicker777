@@ -19,27 +19,29 @@ public class Censorship : MonoBehaviour {
     int moduleId;
     private bool moduleSolved;
 
-    string FourFiftyOne = "ItwasapleasuretoburnItwasaspecialpleasuretoseethingseatentoseethingsblackenedandchangedWiththebrassnozzleinhisfistswiththisgreatpythonspittingitsvenomouskeroseneupontheworldthebloodpoundedinhisheadandhishandswerethehandsofsomeamazingconductorplayingallthesymphoniesofblazingandburningtobringdownthetattersandcharcoalruinsofhistoryWithhissymbolichelmetnumberedfourfiftyoneonhisstolidheadandhiseyesallorangeflamewiththethoughtofwhatcamenextheflickedtheigniterandthehousejumpedupinagorgingfirethatburnedtheeveningskyredandyellowandblackHestrodeinaswarmoffirefliesHewantedaboveallliketheoldjoketoshoveamarshmallowonastickinthefurnacewhiletheflappingpigeonwingedbooksdiedontheporchandlawnofthehouseWhilethebookswentupinsparklingwhirlsandblewawayonawindturneddarkwithburningMontagGrinnedthefiercegrinofallmensingedanddrivenbackbyflameHeknewthatwhenhereturnedtothefirehousehemightwinkathimselfaminstrelmanburntcorkedinthemirrorLatergoingtosleephewouldfeelthefierysmilestillgrippedbyhisfacemusclesinthedarkItneverwentawaythatsmileitnevereverwentawayaslongasherememberedHehunguphisblackbeetlecoloredhelmetandshinedithehunghisflameproofjacketneatlyheshoweredluxuriouslyandthenwhistlinghandsinpocketswalkedacrosstheupperfloorofthefirestationandfelldowntheholeAtthelastmomentwhendisasterseemedpositivehepulledhishandsfromhispocketsandbrokehisfallbygraspingthegoldenpollHeslidtoasqueakinghalttheheelsoneinchfromtheconcretefloordownstairs#";
-    //The hash in the string above had a reason, I forgot the reason though.
-    string FuckYouCSharp = "";
-    char[] Alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    char[] HeheAlphabetGoBrrrr = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    string SelectLetter = "";
     int WeedWeedChungus = 0;
     int Asswipe = 0;
     int Index = 0;
+
     float Hue = 0.1f;
     float Saturation = 0f;
     float Value = 1f;
+
+    string FourFiftyOne = "ItwasapleasuretoburnItwasaspecialpleasuretoseethingseatentoseethingsblackenedandchangedWiththebrassnozzleinhisfistswiththisgreatpythonspittingitsvenomouskeroseneupontheworldthebloodpoundedinhisheadandhishandswerethehandsofsomeamazingconductorplayingallthesymphoniesofblazingandburningtobringdownthetattersandcharcoalruinsofhistoryWithhissymbolichelmetnumberedfourfiftyoneonhisstolidheadandhiseyesallorangeflamewiththethoughtofwhatcamenextheflickedtheigniterandthehousejumpedupinagorgingfirethatburnedtheeveningskyredandyellowandblackHestrodeinaswarmoffirefliesHewantedaboveallliketheoldjoketoshoveamarshmallowonastickinthefurnacewhiletheflappingpigeonwingedbooksdiedontheporchandlawnofthehouseWhilethebookswentupinsparklingwhirlsandblewawayonawindturneddarkwithburningMontagGrinnedthefiercegrinofallmensingedanddrivenbackbyflameHeknewthatwhenhereturnedtothefirehousehemightwinkathimselfaminstrelmanburntcorkedinthemirrorLatergoingtosleephewouldfeelthefierysmilestillgrippedbyhisfacemusclesinthedarkItneverwentawaythatsmileitnevereverwentawayaslongasherememberedHehunguphisblackbeetlecoloredhelmetandshinedithehunghisflameproofjacketneatlyheshoweredluxuriouslyandthenwhistlinghandsinpocketswalkedacrosstheupperfloorofthefirestationandfelldowntheholeAtthelastmomentwhendisasterseemedpositivehepulledhishandsfromhispocketsandbrokehisfallbygraspingthegoldenpollHeslidtoasqueakinghalttheheelsoneinchfromtheconcretefloordownstairs#";
+    //The hash in the string above had a reason, I forgot the reason though.
+    string Log;
+    string FuckYouCSharp = "";
+    string SelectLetter = "";
+    
+    char[] Alphabet = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    char[] HeheAlphabetGoBrrrr = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
     void Awake () {
         moduleId = moduleIdCounter++;
         foreach (KMSelectable Arrow in Arrows) {
             Arrow.OnInteract += delegate () { ArrowPress(Arrow); return false; };
         }
-
         Asshole.OnInteract += delegate () { AssholePress(); return false; };
-
     }
 
     void Start () {
@@ -50,14 +52,17 @@ public class Censorship : MonoBehaviour {
       SelectLetter = FourFiftyOne[WeedWeedChungus].ToString();
       Debug.LogFormat("[Censorship #{0}] The starting letter is the {1}(th) one. That is a(n) {2}.", moduleId, WeedWeedChungus + 1, SelectLetter);
       HeheAlphabetGoBrrrr.Shuffle();
-      for (int i = 0; i < FourFiftyOne.Length - 1; i++) {
-        for (int j = 0; j < Alphabet.Length; j++) {
-          if (FourFiftyOne[i] == Alphabet[j]) {
+      for (int i = 0; i < FourFiftyOne.Length - 1; i++)
+        for (int j = 0; j < Alphabet.Length; j++)
+          if (FourFiftyOne[i] == Alphabet[j])
             FuckYouCSharp += HeheAlphabetGoBrrrr[j];
-          }
-        }
-      }
       FuckYouCSharp += "#";
+      if (WeedWeedChungus > 10)
+        for (int i = 0; i < 21; i++)
+          Log += FourFiftyOne[(WeedWeedChungus - 10 + i) % 1424];
+      Debug.LogFormat("[Censorship #{0}] The starting letter with 10 letters before and after is {1}.", moduleId, Log);
+      for (int i = 0; i < 26; i++)
+        Debug.LogFormat("[Censorship #{0}] {1} is replaced with {2}.", moduleId, Alphabet[i], HeheAlphabetGoBrrrr[i]);
       StartCoroutine(WatchMeCrankItWatchMeRoll());
     }
 
@@ -74,30 +79,25 @@ public class Censorship : MonoBehaviour {
 
     void ArrowPress (KMSelectable Arrow) {
       Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Arrow.transform);
-      if (moduleSolved) {
+      if (moduleSolved)
         return;
-      }
       if (Arrow == Arrows[0]) {
         Index--;
-        if (Index < 0) {
+        if (Index < 0)
           Index += 26;
-        }
         Textmeshes[0].text = Alphabet[Index].ToString();
       }
       else {
         Index++;
-        if (Index > 25) {
-          Index -= 26;
-        }
+        Index %= 26;
         Textmeshes[0].text = Alphabet[Index].ToString();
       }
     }
 
     void AssholePress () {
       Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Asshole.transform);
-      if (moduleSolved) {
+      if (moduleSolved)
         return;
-      }
       if (Textmeshes[0].text == SelectLetter) {
         GetComponent<KMBombModule>().HandlePass();
         StopAllCoroutines();
@@ -105,17 +105,15 @@ public class Censorship : MonoBehaviour {
         StartCoroutine(SolveAnim());
         moduleSolved = true;
       }
-      else {
+      else
         GetComponent<KMBombModule>().HandleStrike();
-      }
     }
 
     IEnumerator SolveAnim () {
       for (int i = 0; i < 256; i++) {
         Saturation += 0.00390625f;
-        if (i > 192) {
+        if (i > 192)
           Value -= 0.015625f;
-        }
         hmgjkhgfjmnmgnbh.material.color = Color.HSVToRGB(Hue, Saturation, Value);
         yield return new WaitForSeconds(0.008f);
         }
@@ -128,11 +126,9 @@ public class Censorship : MonoBehaviour {
     IEnumerator ProcessTwitchCommand (string Command) {
       Command = Command.ToUpper().Trim();
       int AssHoleCheck = 0;
-      for (int i = 0; i < Alphabet.Length; i++) {
-        if (Alphabet[i].ToString() != Command.ToUpper()) {
+      for (int i = 0; i < Alphabet.Length; i++)
+        if (Alphabet[i].ToString() != Command.ToUpper())
           AssHoleCheck += 1;
-        }
-      }
       yield return null;
       if (AssHoleCheck == 25)
       {
@@ -158,9 +154,8 @@ public class Censorship : MonoBehaviour {
         }
         Asshole.OnInteract();
       }
-      else {
+      else
         yield return "sendtochaterror I don't understand!";
-      }
     }
 
     int[] ExishWhyAreYou(string Something) {
