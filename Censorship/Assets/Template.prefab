@@ -1138,7 +1138,7 @@ MonoBehaviour:
   - {fileID: 114251846374337962}
   - {fileID: 114945835681180086}
   IsPassThrough: 0
-  ChildRowLength: 0
+  ChildRowLength: 3
   Highlight: {fileID: 114570430299588062}
   SelectableColliders: []
   DefaultSelectableIndex: 0
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   Arrows:
   - {fileID: 114937238429814754}
   - {fileID: 114945835681180086}
-  Asshole: {fileID: 114251846374337962}
+  Submit: {fileID: 114251846374337962}
   Textmeshes:
   - {fileID: 102610683866568506}
   - {fileID: 102230274743807160}

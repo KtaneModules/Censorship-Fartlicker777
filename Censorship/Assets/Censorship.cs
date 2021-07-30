@@ -155,7 +155,7 @@ public class Censorship : MonoBehaviour {
             }
          }
          else {
-            int Why = UnityEngine.Random.Range(0, 2);
+            int Why = Rnd.Range(0, 2);
             for (int i = 0; i < Is[0]; i++) {
                Arrows[Why].OnInteract();
                yield return new WaitForSeconds(.1f);
@@ -205,7 +205,7 @@ public class Censorship : MonoBehaviour {
          }
       }
       else {
-         int Why = UnityEngine.Random.Range(0, 2);
+         int Why = Rnd.Range(0, 2);
          for (int i = 0; i < Is[0]; i++) {
             Arrows[Why].OnInteract();
             yield return new WaitForSeconds(.1f);
