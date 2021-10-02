@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using Rnd = UnityEngine.Random;
 
@@ -41,7 +43,21 @@ public class Censorship : MonoBehaviour {
    }
 
    void Start () {
-      Audio.PlaySoundAtTransform("Dreams of Cruelty", transform);
+      if (GetMissionID() == "mod_TheFortySevenButAwesome_The 47") {
+         switch (Rnd.Range(0, 2)) {
+            case 0:
+               Audio.PlaySoundAtTransform("The Following Presentation", transform);
+               break;
+            case 1:
+               Audio.PlaySoundAtTransform("Sonic", transform);
+               break;
+         }
+         
+      }
+      else {
+         Audio.PlaySoundAtTransform("Dreams of Cruelty", transform);
+      }
+      
       Index = Rnd.Range(0, 26);
       Textmeshes[0].text = Alphabet[Index].ToString();
       FourFiftyOne = FourFiftyOne.ToUpper();
@@ -124,6 +140,19 @@ public class Censorship : MonoBehaviour {
          }
          hmgjkhgfjmnmgnbh.material.color = Color.HSVToRGB(Hue, Saturation, Value);
          yield return new WaitForSeconds(0.008f);
+      }
+   }
+
+   private string GetMissionID () {
+      try {
+         Component gameplayState = GameObject.Find("GameplayState(Clone)").GetComponent("GameplayState");
+         Type type = gameplayState.GetType();
+         FieldInfo fieldMission = type.GetField("MissionToLoad", BindingFlags.Public | BindingFlags.Static);
+         return fieldMission.GetValue(gameplayState).ToString();
+      }
+
+      catch (NullReferenceException) {
+         return "undefined";
       }
    }
 
