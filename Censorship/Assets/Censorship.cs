@@ -44,15 +44,17 @@ public class Censorship : MonoBehaviour {
 
    void Start () {
       if (GetMissionID() == "mod_TheFortySevenButAwesome_The 47") {
-         switch (Rnd.Range(0, 2)) {
+         switch (Rnd.Range(0, 3)) {
             case 0:
                Audio.PlaySoundAtTransform("The Following Presentation", transform);
                break;
             case 1:
                Audio.PlaySoundAtTransform("Sonic", transform);
                break;
+            case 2:
+               Audio.PlaySoundAtTransform("Tank", transform);
+               break;
          }
-         
       }
       else {
          Audio.PlaySoundAtTransform("Dreams of Cruelty", transform);
