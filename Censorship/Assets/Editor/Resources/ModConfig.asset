@@ -23,7 +23,11 @@ MonoBehaviour:
     Manual can be found at ktane.timwi.de or in the manuals folder of your game.
 
 
-    If there are any bugs, contact Fartlicker777#9169 on Discord.'
+    If there are any bugs, contact Fartlicker777#9169 on Discord.
+
+
+    If you want to enforce Baby Mode for a mission, simply put ([Censorship] true)
+    in the description! Changing it to false will enforce Big Man Mode.'
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 3d1e4a3a6c80d8f4fabd33bd23bf4ff2, type: 3}

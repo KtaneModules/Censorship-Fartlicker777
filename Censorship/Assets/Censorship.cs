@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using System.Text.RegularExpressions;
 using Rnd = UnityEngine.Random;
 
 public class Censorship : MonoBehaviour {
@@ -20,12 +22,13 @@ public class Censorship : MonoBehaviour {
    int IndexOfStartingLetter = 0;
    int CurrentNumber = 0;
    int Index = 0;
+   int BeginningOfSelection;
 
    float Hue = 0.1f;
    float Saturation = 0f;
    float Value = 1f;
 
-   string FourFiftyOne = "ItwasapleasuretoburnItwasaspecialpleasuretoseethingseatentoseethingsblackenedandchangedWiththebrassnozzleinhisfistswiththisgreatpythonspittingitsvenomouskeroseneupontheworldthebloodpoundedinhisheadandhishandswerethehandsofsomeamazingconductorplayingallthesymphoniesofblazingandburningtobringdownthetattersandcharcoalruinsofhistoryWithhissymbolichelmetnumberedfourfiftyoneonhisstolidheadandhiseyesallorangeflamewiththethoughtofwhatcamenextheflickedtheigniterandthehousejumpedupinagorgingfirethatburnedtheeveningskyredandyellowandblackHestrodeinaswarmoffirefliesHewantedaboveallliketheoldjoketoshoveamarshmallowonastickinthefurnacewhiletheflappingpigeonwingedbooksdiedontheporchandlawnofthehouseWhilethebookswentupinsparklingwhirlsandblewawayonawindturneddarkwithburningMontagGrinnedthefiercegrinofallmensingedanddrivenbackbyflameHeknewthatwhenhereturnedtothefirehousehemightwinkathimselfaminstrelmanburntcorkedinthemirrorLatergoingtosleephewouldfeelthefierysmilestillgrippedbyhisfacemusclesinthedarkItneverwentawaythatsmileitnevereverwentawayaslongasherememberedHehunguphisblackbeetlecoloredhelmetandshinedithehunghisflameproofjacketneatlyheshoweredluxuriouslyandthenwhistlinghandsinpocketswalkedacrosstheupperfloorofthefirestationandfelldowntheholeAtthelastmomentwhendisasterseemedpositivehepulledhishandsfromhispocketsandbrokehisfallbygraspingthegoldenpollHeslidtoasqueakinghalttheheelsoneinchfromtheconcretefloordownstairs#";
+   string FourFiftyOne = "ItwasapleasuretoburnItwasaspecialpleasuretoseethingseatentoseethingsblackenedandchangedWiththebrassnozzleinhisfistswiththisgreatpythonspittingitsvenomouskeroseneupontheworldthebloodpoundedinhisheadandhishandswerethehandsofsomeamazingconductorplayingallthesymphoniesofblazingandburningtobringdownthetattersandcharcoalruinsofhistoryWithhissymbolichelmetnumberedfourfiftyoneonhisstolidheadandhiseyesallorangeflamewiththethoughtofwhatcamenextheflickedtheigniterandthehousejumpedupinagorgingfirethatburnedtheeveningskyredandyellowandblackHestrodeinaswarmoffirefliesHewantedaboveallliketheoldjoketoshoveamarshmallowonastickinthefurnacewhiletheflappingpigeonwingedbooksdiedontheporchandlawnofthehouseWhilethebookswentupinsparklingwhirlsandblewawayonawindturneddarkwithburningMontagGrinnedthefiercegrinofallmensingedanddrivenbackbyflameHeknewthatwhenhereturnedtothefirehousehemightwinkathimselfaminstrelmanburntcorkedinthemirrorLatergoingtosleephewouldfeelthefierysmilestillgrippedbyhisfacemusclesinthedarkItneverwentawaythatsmileitnevereverwentawayaslongasherememberedHehunguphisblackbeetlecoloredhelmetandshinedithehunghisflameproofjacketneatlyheshoweredluxuriouslyandthenwhistlinghandsinpocketswalkedacrosstheupperfloorofthefirestationandfelldowntheholeAtthelastmomentwhendisasterseemedpositivehepulledhishandsfromhispocketsandbrokehisfallbygraspingthegoldenpollHeslidtoasqueakinghalttheheelsoneinchfromtheconcretefloordownstairs#".ToUpper();
    //The hash in the string above had a reason, I forgot the reason though.
    string Log;
    string InefficientLetterDisplayer = "";
@@ -34,17 +37,62 @@ public class Censorship : MonoBehaviour {
    char[] Alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
    char[] HeheAlphabetGoBrrrr = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
+   #region ModSettings
+
+   CensorshipSettings Settings = new CensorshipSettings();
+#pragma warning disable 414
+   private static Dictionary<string, object>[] TweaksEditorSettings = new Dictionary<string, object>[]
+   {
+      new Dictionary<string, object>
+      {
+        { "Filename", "Censorship Settings.json"},
+        { "Name", "Censorship" },
+        { "Listings", new List<Dictionary<string, object>>
+        {
+          new Dictionary<string, object>
+          {
+            { "Key", "BabyMode" },
+            { "Text", "Enable baby mode? (Highlights all instances of the initial letter)."}
+          }
+        }}
+      }
+   };
+#pragma warning restore 414
+
+   class CensorshipSettings {
+      public bool BabyMode = false;
+   }
+
+   #endregion
+
    void Awake () {
       moduleId = moduleIdCounter++;
+      ModConfig<CensorshipSettings> modConfig = new ModConfig<CensorshipSettings>("Censorship Settings");
+      Settings = modConfig.Read();
+
+      string missionDesc = KTMissionGetter.Mission.Description;
+      if (missionDesc != null) {
+         Regex regex = new Regex(@"\[Censorship\] (true|false)");
+         var match = regex.Match(missionDesc);
+         if (match.Success) {
+            string[] options = match.Value.Replace("[Organization] ", "").Split(',');
+            bool[] values = new bool[options.Length];
+            for (int i = 0; i < options.Length; i++)
+               values[i] = options[i] == "true" ? true : false;
+            Settings.BabyMode = values[0];
+         }
+      }
+
       foreach (KMSelectable Arrow in Arrows) {
          Arrow.OnInteract += delegate () { ArrowPress(Arrow); return false; };
       }
       Submit.OnInteract += delegate () { SubmitPress(); return false; };
+      modConfig.Write(Settings);
    }
 
    void Start () {
       if (GetMissionID() == "mod_TheFortySevenButAwesome_The 47") {
-         switch (Rnd.Range(0, 3)) {
+         switch (Rnd.Range(0, 4)) {
             case 0:
                Audio.PlaySoundAtTransform("The Following Presentation", transform);
                break;
@@ -54,16 +102,25 @@ public class Censorship : MonoBehaviour {
             case 2:
                Audio.PlaySoundAtTransform("Tank", transform);
                break;
+            case 3:
+               Audio.PlaySoundAtTransform("Metroid", transform);
+               break;
          }
+         Settings.BabyMode = false;
       }
       else {
-         Audio.PlaySoundAtTransform("Dreams of Cruelty", transform);
+         if (Rnd.Range(0, 20) == 0) {
+            Audio.PlaySoundAtTransform("Metroid", transform);
+         }
+         else {
+            Audio.PlaySoundAtTransform("Dreams of Cruelty", transform);
+         }
       }
-      
+
       Index = Rnd.Range(0, 26);
       Textmeshes[0].text = Alphabet[Index].ToString();
-      FourFiftyOne = FourFiftyOne.ToUpper();
       IndexOfStartingLetter = Rnd.Range(0, FourFiftyOne.Length - 1);
+      BeginningOfSelection = IndexOfStartingLetter;
       SelectLetter = FourFiftyOne[IndexOfStartingLetter].ToString();
       Debug.LogFormat("[Censorship #{0}] The starting letter is the {1}(th) one. That is a(n) {2}.", moduleId, IndexOfStartingLetter + 1, SelectLetter);
       HeheAlphabetGoBrrrr.Shuffle();
@@ -90,6 +147,7 @@ public class Censorship : MonoBehaviour {
    IEnumerator WatchMeCrankItWatchMeRoll () {
       while (true) {
          Textmeshes[1].text = InefficientLetterDisplayer[IndexOfStartingLetter].ToString();
+         Textmeshes[1].color = Settings.BabyMode && InefficientLetterDisplayer[IndexOfStartingLetter] == InefficientLetterDisplayer[BeginningOfSelection] ? new Color32(0, 255, 0, 255) : new Color32(255, 255, 255, 255);
          IndexOfStartingLetter++;
          IndexOfStartingLetter %= FourFiftyOne.Length - 1;
          CurrentNumber++;
