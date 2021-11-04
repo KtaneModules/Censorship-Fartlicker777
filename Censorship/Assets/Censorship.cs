@@ -75,7 +75,7 @@ public class Censorship : MonoBehaviour {
          Regex regex = new Regex(@"\[Censorship\] (true|false)");
          var match = regex.Match(missionDesc);
          if (match.Success) {
-            string[] options = match.Value.Replace("[Organization] ", "").Split(',');
+            string[] options = match.Value.Replace("[Censorship] ", "").Split(',');
             bool[] values = new bool[options.Length];
             for (int i = 0; i < options.Length; i++)
                values[i] = options[i] == "true" ? true : false;
